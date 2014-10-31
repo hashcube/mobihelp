@@ -1,0 +1,12 @@
+{
+    "copyFiles": [
+        "MobihelpPlugin.java"
+    ],
+    "libraries": [
+		"mobihelp"
+    ],
+    "jars": [
+    ],
+    "injectionXML": "manifest.xml",
+	"injectionXSL": "manifest.xsl"
+}

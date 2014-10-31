@@ -1,0 +1,62 @@
+<!--START_PLUGINS_MANIFEST-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<!--END_PLUGINS_MANIFEST-->
+<!--START_PLUGINS_APPLICATION-->
+	<!--Mobihelp-->
+	<meta-data android:name="MOBIHELP_DOMAIN" android:value="" />
+	<meta-data android:name="MOBIHELP_APP_ID" android:value="" />
+	<meta-data android:name="MOBIHELP_APP_SECRET" android:value="" />
+	
+	<activity
+        android:name="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
+        android:configChanges="orientation|screenSize"
+        android:windowSoftInputMode="adjustPan" 
+        android:theme="@style/Theme.Mobihelp">
+    </activity>
+    <activity
+        android:name="com.freshdesk.mobihelp.activity.FeedbackActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:windowSoftInputMode="adjustResize|stateVisible"
+        android:theme="@style/Theme.Mobihelp" >
+    </activity>
+    <activity
+        android:name="com.freshdesk.mobihelp.activity.TicketListActivity"
+        android:parentActivityName="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
+        android:theme="@style/Theme.Mobihelp" >
+         <!-- Parent activity meta-data to support 4.0 and lower -->
+         <meta-data
+             android:name="android.support.PARENT_ACTIVITY"
+             android:value="com.freshdesk.mobihelp.activity.SolutionArticleListActivity" />
+    </activity>
+    <activity
+        android:name="com.freshdesk.mobihelp.activity.SolutionArticleActivity"
+        android:parentActivityName="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
+        android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+        android:theme="@style/Theme.Mobihelp" >
+        <!-- Parent activity meta-data to support 4.0 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.freshdesk.mobihelp.activity.SolutionArticleListActivity" />
+    </activity>
+    <activity
+        android:name="com.freshdesk.mobihelp.activity.ConversationActivity"
+        android:parentActivityName="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
+        android:windowSoftInputMode="adjustResize|stateHidden"
+        android:theme="@style/Theme.Mobihelp" >
+        <!-- Parent activity meta-data to support 4.0 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.freshdesk.mobihelp.activity.SolutionArticleListActivity" />
+    </activity>
+
+    <service android:name="com.freshdesk.mobihelp.service.MobihelpService" />
+
+    <receiver android:name="com.freshdesk.mobihelp.receiver.ConnectivityReceiver" >
+        <intent-filter>
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+        </intent-filter>
+    </receiver>
+<!--END_PLUGINS_APPLICATION-->
