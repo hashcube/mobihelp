@@ -85,7 +85,7 @@ var Mobihelp = Class(function () {
 		pluginSend("addCustomData", params);
 	}
 	
-	this.appRateDialogue = function () {
+	this.showAppRateDialog = function () {
 		logger.log("{mobihelp} invoked show app rate dialog");
 		pluginSend("showAppRateDialog", {});
 	}

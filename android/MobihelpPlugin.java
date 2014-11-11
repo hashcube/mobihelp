@@ -5,15 +5,11 @@ import com.tealeaf.plugin.IPlugin;
 import com.tealeaf.TeaLeaf;
 import com.tealeaf.EventQueue;
 import com.freshdesk.mobihelp.*;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
-import android.util.Log;
 import android.os.Bundle;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 
 public class MobihelpPlugin implements IPlugin {
