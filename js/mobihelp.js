@@ -41,7 +41,7 @@ var Mobihelp = Class(function () {
 		pluginOn("unreadNotificationCount", function(evt) {
 			logger.log("{unreadNotificationCount} Count :", evt.count);
 
-			invokeCallbacks(unreadNotifCountCB, true, evt.count !== "0", evt);
+			invokeCallbacks(unreadNotifCountCB, false, evt);
 		});
 	}
 	
@@ -85,7 +85,7 @@ var Mobihelp = Class(function () {
 		pluginSend("addCustomData", params);
 	}
 	
-	this.showAppRateDialogue = function () {
+	this.appRateDialogue = function () {
 		logger.log("{mobihelp} invoked show app rate dialog");
 		pluginSend("showAppRateDialog", {});
 	}
@@ -102,19 +102,16 @@ var Mobihelp = Class(function () {
 		pluginSend("showSupport", {});
 	}
 
-	this.checkUnreadNotifications = function (async, next) {
-		params = {};
+	this.registerUnreadNotifCallback = function (callBack) {
+		unreadNotifCountCB.push(callBack);
+	}
+
+	this.checkUnreadNotifications = function (async) {
+		var params = {};
 		
 		logger.log("{mobihelp} check unread notifications");
 		
-		if(async) {
-			params["async"] = true;
-		}
-		else {
-			params["async"] = false;
-		}
-		
-		unreadNotifCountCB.push(next);
+		params["async"] = !!async;
 		pluginSend("checkUnreadNotifications", params);
 	}
 });

@@ -77,7 +77,8 @@ public class MobihelpPlugin implements IPlugin {
 		}
 	}
 	
-	public void onResume() {		
+	public void onResume() {
+		this.checkUnreadNotifications("{async: true}");
 	}
 	
 	public void onStart() {		
