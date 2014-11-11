@@ -87,7 +87,7 @@ var Mobihelp = Class(function () {
 	
 	this.showAppRateDialogue = function () {
 		logger.log("{mobihelp} invoked show app rate dialog");
-		pluginSend("showAppRateDialogue", {});
+		pluginSend("showAppRateDialog", {});
 	}
 	
 	this.showConversations = function () {
@@ -105,7 +105,7 @@ var Mobihelp = Class(function () {
 	this.checkUnreadNotifications = function (async, next) {
 		params = {};
 		
-		logger.log("{mobihelp} chech unread notifications");
+		logger.log("{mobihelp} check unread notifications");
 		
 		if(async) {
 			params["async"] = true;

@@ -16,7 +16,7 @@ import android.os.Bundle;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 
-public class MobihelpPlugin implements IPlugin{
+public class MobihelpPlugin implements IPlugin {
 
 	private Activity mActivity;
 	
@@ -65,7 +65,7 @@ public class MobihelpPlugin implements IPlugin{
 		String domain, appId, appSecret;
 		try {
 			Bundle meta = manager.getApplicationInfo(activity.getApplicationContext().getPackageName(),
-                    PackageManager.GET_META_DATA).metaData;
+				PackageManager.GET_META_DATA).metaData;
 			domain = meta.get("MOBIHELP_DOMAIN").toString();
 			appId = meta.get("MOBIHELP_APP_ID").toString();
 			appSecret = meta.get("MOBIHELP_APP_SECRET").toString();
@@ -167,7 +167,7 @@ public class MobihelpPlugin implements IPlugin{
 		}		
 	}
 	
-	public void showAppRateDialogue(String params) {
+	public void showAppRateDialog(String params) {
 		Mobihelp.showAppRateDialog(this.mActivity);
 	}
 	
