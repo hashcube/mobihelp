@@ -15,6 +15,8 @@ import android.content.pm.PackageManager;
 public class MobihelpPlugin implements IPlugin {
 
 	private Activity mActivity;
+
+	private final String TAG = "{mobihelp}";
 	
 	public class UnreadNotificationCountEvent extends com.tealeaf.event.Event {
 		String statusCode;
@@ -47,7 +49,7 @@ public class MobihelpPlugin implements IPlugin {
 			else{
 				status = "error";
 			}
-			android.util.Log.d("UnreadCountDebug", "asynchronous call");
+			logger.log(TAG, "asynchronous call");
 			EventQueue.pushEvent(new UnreadNotificationCountEvent(status, count));
 		}
 	};
@@ -69,7 +71,7 @@ public class MobihelpPlugin implements IPlugin {
 			Mobihelp.init(activity, config);
 		}
 		catch (Exception e) {
-			android.util.Log.d("EXCEPTION", "" + e.getMessage());
+			logger.log(TAG + "{exception}", "" + e.getMessage());
 		}
 	}
 	
@@ -112,7 +114,7 @@ public class MobihelpPlugin implements IPlugin {
 			this.setEmail((String) userObj.get("email"));
 		}
 		catch (Exception e) {
-			android.util.Log.d("EXCEPTION", "" + e.getMessage());
+			logger.log(TAG + "{exception}", "" + e.getMessage());
 		}
 	}
 	
@@ -123,7 +125,7 @@ public class MobihelpPlugin implements IPlugin {
 			this.setEmail(reqJson.getString("email"));
 		}
 		catch (Exception e){
-			android.util.Log.d("EXCEPTION", "" + e.getMessage());
+			logger.log(TAG + "{exception}", "" + e.getMessage());
 		}		
 	}
 
@@ -134,7 +136,7 @@ public class MobihelpPlugin implements IPlugin {
 			this.setFullName(reqJson.getString("full_name"));
 		}
 		catch (Exception e){
-			android.util.Log.d("EXCEPTION", "" + e.getMessage());
+			logger.log(TAG + "{exception}", "" + e.getMessage());
 		}		
 	}
 
@@ -149,7 +151,7 @@ public class MobihelpPlugin implements IPlugin {
 			Mobihelp.leaveBreadCrumb(reqJson.getString("breadcrumb_text"));
 		}
 		catch (Exception e){
-			android.util.Log.d("EXCEPTION", "" + e.getMessage());
+			logger.log(TAG + "{exception}", "" + e.getMessage());
 		}		
 	}
 
@@ -160,7 +162,7 @@ public class MobihelpPlugin implements IPlugin {
 			Mobihelp.addCustomData(reqJson.getString("field_name"), reqJson.getString("value"));
 		}
 		catch (Exception e){
-			android.util.Log.d("EXCEPTION", "" + e.getMessage());
+			logger.log(TAG + "{exception}", "" + e.getMessage());
 		}		
 	}
 	
@@ -192,12 +194,11 @@ public class MobihelpPlugin implements IPlugin {
 			}
 			else {
 				count = Mobihelp.getUnreadCount(this.mActivity);
-				android.util.Log.d("UnreadCountDebug", "synchronous call");
 				EventQueue.pushEvent(new UnreadNotificationCountEvent("success", count));
 			}
 		}
 		catch (Exception e){
-			android.util.Log.d("EXCEPTION", "" + e.getMessage());
+			logger.log(TAG + "{exception}", "" + e.getMessage());
 		}		
 		
 	}
