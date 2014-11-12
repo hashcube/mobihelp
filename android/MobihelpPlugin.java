@@ -21,7 +21,7 @@ public class MobihelpPlugin implements IPlugin {
 		int count;
 
 		public UnreadNotificationCountEvent(String status, int count) {
-			super("unreadNotificationCount");
+			super("mobihelpNotifCount");
 			this.statusCode = status;
 			this.count = count;			
 		}		

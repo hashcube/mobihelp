@@ -38,7 +38,7 @@ var Mobihelp = Class(function () {
 	this.init = function(opts) {
 		logger.log("{mobihelp} Registering for events on startup");
 		
-		pluginOn("unreadNotificationCount", function(evt) {
+		pluginOn("mobihelpNotifCount", function(evt) {
 			logger.log("{unreadNotificationCount} Count :", evt.count);
 
 			invokeCallbacks(unreadNotifCountCB, false, evt);
