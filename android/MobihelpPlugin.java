@@ -144,11 +144,11 @@ public class MobihelpPlugin implements IPlugin {
 		Mobihelp.clearUserData(this.mActivity);
 	}
 	
-	public void addBreadCrumb (String param) {
+	public void leaveBreadCrumb (String param) {
 		JSONObject reqJson;		
 		try{
 			reqJson = new JSONObject(param);
-			Mobihelp.leaveBreadCrumb(reqJson.getString("breadcrumb_text"));
+			Mobihelp.leaveBreadCrumb(reqJson.getString("breadcrumb"));
 		}
 		catch (Exception e){
 			logger.log(TAG + "{exception}", "" + e.getMessage());

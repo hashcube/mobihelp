@@ -62,9 +62,9 @@
 	[[Mobihelp sharedInstance] clearUserData];
 }
 
-- (void) addBreadCrumb: (NSDictionary *)jsonObject {
+- (void) leaveBreadCrumb: (NSDictionary *)jsonObject {
 	[[Mobihelp sharedInstance]
-		leaveBreadcrumb:[jsonObject objectForKey:@"breadcrumb_text"]];
+		leaveBreadcrumb:[jsonObject objectForKey:@"breadcrumb"]];
 }
 
 - (void) addCustomData: (NSDictionary *)jsonObject {

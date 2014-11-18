@@ -71,11 +71,11 @@ var Mobihelp = Class(function () {
 		pluginSend("clearUserData", {});
 	}
 	
-	this.addBreadCrumb = function (breadCrumbText) {
+	this.leaveBreadCrumb = function (breadCrumb) {
 		logger.log("{mobihelp} invoked add breadcrumb");
-		var params = {breadcrumb_text: breadCrumbText};
+		var params = {breadcrumb: breadCrumb};
 		
-		pluginSend("addBreadCrumb", params);
+		pluginSend("leaveBreadCrumb", params);
 	}
 	
 	this.addCustomData = function (fieldName, value) {
