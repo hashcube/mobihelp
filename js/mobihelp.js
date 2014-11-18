@@ -1,23 +1,22 @@
 function pluginSend(evt, params) {
-	NATIVE && NATIVE.plugins && NATIVE.plugins.sendEvent &&
-		NATIVE.plugins.sendEvent("MobihelpPlugin", evt,
-				JSON.stringify(params || {}));
+	NATIVE.plugins.sendEvent("MobihelpPlugin", evt,
+			JSON.stringify(params || {}));
 }
 
 function pluginOn(evt, next) {
-	NATIVE && NATIVE.events && NATIVE.events.registerHandler &&
-		NATIVE.events.registerHandler(evt, next);
+	NATIVE.events.registerHandler(evt, next);
 }
 
-function invokeCallbacks(list, clear) {
+function invokeCallbacks(list) {
 	// Pop off the first two arguments and keep the rest
-	var args = Array.prototype.slice.call(arguments);
-	args.shift();
-	args.shift();
+	var args = Array.prototype.splice.call(arguments, 2),
+	    i = 0,
+	    len = list.length,
+	    next;
 
 	// For each callback,
-	for (var ii = 0; ii < list.length; ++ii) {
-		var next = list[ii];
+	for (i = 0; i < len; ++i) {
+		next = list[i];
 
 		// If callback was actually specified,
 		if (next) {
@@ -25,15 +24,10 @@ function invokeCallbacks(list, clear) {
 			next.apply(null, args);
 		}
 	}
-
-	// If asked to clear the list too,
-	if (clear) {
-		list.length = 0;
-	}
 }
 
-var Mobihelp = Class(function () {
-	var unreadNotifCountCB = [];
+exports = new (Class(function () {
+	var unread_cb = [];
 	
 	this.init = function(opts) {
 		logger.log("{mobihelp} Registering for events on startup");
@@ -41,52 +35,35 @@ var Mobihelp = Class(function () {
 		pluginOn("mobihelpNotifCount", function(evt) {
 			logger.log("{unreadNotificationCount} Count :", evt.count);
 
-			invokeCallbacks(unreadNotifCountCB, false, evt);
+			invokeCallbacks(unread_cb, evt);
 		});
 	}
 	
-	this.setUserInfo = function (email, fullName) {
-		logger.log("{mobihelp} invoked setUserInfo");
-		var params = {full_name: fullName, email: email};
-		
-		pluginSend("setUserInfo", params);
+	this.setUserInfo = function (email, full_name) {
+		pluginSend("setUserInfo", {full_name: full_name, email: email});
 	}
 	
 	this.setUserEmail = function (email) {
-		logger.log("{mobihelp} invoked setUserEmail");
-		var params = {email: email};
-		
-		pluginSend("setUserEmail", params);
+		pluginSend("setUserEmail", {email: email});
 	}
 
-	this.setUserFullName = function (fullName) {
-		logger.log("{mobihelp} invoked setUserFullName");
-		var params = {full_name: fullName};
-		
-		pluginSend("setUserFullName", params);
+	this.setUserFullName = function (full_name) {
+		pluginSend("setUserFullName", {full_name: full_name});
 	}
 	
 	this.clearUserData = function () {
-		logger.log("{mobihelp} invoked clear user data");
 		pluginSend("clearUserData", {});
 	}
 	
-	this.addBreadCrumb = function (breadCrumbText) {
-		logger.log("{mobihelp} invoked add breadcrumb");
-		var params = {breadcrumb_text: breadCrumbText};
-		
-		pluginSend("addBreadCrumb", params);
+	this.leaveBreadCrumb = function (bread_crumb) {
+		pluginSend("leaveBreadCrumb", {breadcrumb: bread_crumb});
 	}
 	
-	this.addCustomData = function (fieldName, value) {
-		logger.log("{mobihelp} invoked add customdata");
-		var params = {field_name: fieldName, value: value};
-		
-		pluginSend("addCustomData", params);
+	this.addCustomData = function (name, value) {
+		pluginSend("addCustomData", {field_name: name, value: value});
 	}
 	
 	this.showAppRateDialog = function () {
-		logger.log("{mobihelp} invoked show app rate dialog");
 		pluginSend("showAppRateDialog", {});
 	}
 	
@@ -102,18 +79,11 @@ var Mobihelp = Class(function () {
 		pluginSend("showSupport", {});
 	}
 
-	this.registerUnreadNotifCallback = function (callBack) {
-		unreadNotifCountCB.push(callBack);
+	this.registerUnreadNotifCallback = function (cb) {
+		unread_cb.push(cb);
 	}
 
 	this.checkUnreadNotifications = function (async) {
-		var params = {};
-		
-		logger.log("{mobihelp} check unread notifications");
-		
-		params["async"] = !!async;
-		pluginSend("checkUnreadNotifications", params);
+		pluginSend("checkUnreadNotifications", {async: !!async});
 	}
-});
-
-exports = new Mobihelp();
+}))();
