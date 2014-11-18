@@ -78,6 +78,7 @@
 }
 
 - (void) showConversations: (NSDictionary *)jsonObject {
+	[[Mobihelp sharedInstance] presentInbox:self.viewController];
 }
 
 - (void) showFeedback: (NSDictionary *)jsonObject {
