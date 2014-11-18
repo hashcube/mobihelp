@@ -1,0 +1,20 @@
+{
+	"code": [
+		"MobihelpPlugin.h",
+		"MobihelpPlugin.mm"
+	],
+	"frameworks": [
+		"MobileCoreServices",
+		"CoreTelephony",
+		"SystemConfiguration",
+		"CoreData",
+		"CoreGraphics",
+		"UIKit",
+		"Foundation",
+		"Security",
+		"QuartzCore",
+		"sdk/MHModel.bundle",
+		"sdk/libFDMobihelpSDK.a",
+		"sdk/MobihelpResources.bundle"
+	]
+}
