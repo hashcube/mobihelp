@@ -9,8 +9,8 @@
 	<meta-data android:name="MOBIHELP_DOMAIN" android:value="" />
 	<meta-data android:name="MOBIHELP_APP_ID" android:value="" />
 	<meta-data android:name="MOBIHELP_APP_SECRET" android:value="" />
-    <meta-data android:name="MOBIHELP_AUTO_REPLY_ENABLE" android:value="" />
-    <meta-data android:name="MOBIHELP_RATE_PROMPT_COUNT" android:value="" />
+	<meta-data android:name="MOBIHELP_AUTO_REPLY_ENABLE" android:value="" />
+	<meta-data android:name="MOBIHELP_RATE_PROMPT_COUNT" android:value="" />
 	
 	<activity
         android:name="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
