@@ -9,33 +9,37 @@
 	<meta-data android:name="MOBIHELP_DOMAIN" android:value="" />
 	<meta-data android:name="MOBIHELP_APP_ID" android:value="" />
 	<meta-data android:name="MOBIHELP_APP_SECRET" android:value="" />
+    <meta-data android:name="MOBIHELP_AUTO_REPLY_ENABLE" android:value="" />
+    <meta-data android:name="MOBIHELP_RATE_PROMPT_COUNT" android:value="" />
 	
 	<activity
         android:name="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
         android:configChanges="orientation|screenSize"
-        android:windowSoftInputMode="adjustPan" 
-        android:theme="@style/Theme.Mobihelp">
+        android:theme="@style/Theme.Mobihelp"
+        android:windowSoftInputMode="adjustPan" >
     </activity>
     <activity
         android:name="com.freshdesk.mobihelp.activity.FeedbackActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
-        android:windowSoftInputMode="adjustResize|stateVisible"
-        android:theme="@style/Theme.Mobihelp" >
+        android:theme="@style/Theme.Mobihelp"
+        android:windowSoftInputMode="adjustResize|stateVisible" >
     </activity>
     <activity
         android:name="com.freshdesk.mobihelp.activity.TicketListActivity"
         android:parentActivityName="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
         android:theme="@style/Theme.Mobihelp" >
-         <!-- Parent activity meta-data to support 4.0 and lower -->
-         <meta-data
-             android:name="android.support.PARENT_ACTIVITY"
-             android:value="com.freshdesk.mobihelp.activity.SolutionArticleListActivity" />
+
+        <!-- Parent activity meta-data to support 4.0 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.freshdesk.mobihelp.activity.SolutionArticleListActivity" />
     </activity>
     <activity
         android:name="com.freshdesk.mobihelp.activity.SolutionArticleActivity"
         android:parentActivityName="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
-        android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-        android:theme="@style/Theme.Mobihelp" >
+        android:theme="@style/Theme.Mobihelp"
+        android:configChanges="orientation|screenSize|keyboard|keyboardHidden" >
+
         <!-- Parent activity meta-data to support 4.0 and lower -->
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
@@ -44,7 +48,17 @@
     <activity
         android:name="com.freshdesk.mobihelp.activity.ConversationActivity"
         android:parentActivityName="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
-        android:windowSoftInputMode="adjustResize|stateHidden"
+        android:theme="@style/Theme.Mobihelp"
+        android:windowSoftInputMode="adjustResize|stateHidden" >
+        <!-- Parent activity meta-data to support 4.0 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.freshdesk.mobihelp.activity.SolutionArticleListActivity" />
+    </activity>
+    <activity
+        android:name="com.freshdesk.mobihelp.activity.AttachmentHandlerActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:parentActivityName="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
         android:theme="@style/Theme.Mobihelp" >
         <!-- Parent activity meta-data to support 4.0 and lower -->
         <meta-data
@@ -53,7 +67,6 @@
     </activity>
 
     <service android:name="com.freshdesk.mobihelp.service.MobihelpService" />
-
     <receiver android:name="com.freshdesk.mobihelp.receiver.ConnectivityReceiver" >
         <intent-filter>
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
