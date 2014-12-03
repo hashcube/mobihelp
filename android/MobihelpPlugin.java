@@ -60,14 +60,25 @@ public class MobihelpPlugin implements IPlugin {
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		this.mActivity = activity;
 		PackageManager manager = activity.getBaseContext().getPackageManager();
-		String domain, appId, appSecret;
+		String domain, appId, appSecret, autoReply;
+		int ratePromptCount;
 		try {
 			Bundle meta = manager.getApplicationInfo(activity.getApplicationContext().getPackageName(),
 				PackageManager.GET_META_DATA).metaData;
 			domain = meta.get("MOBIHELP_DOMAIN").toString();
 			appId = meta.get("MOBIHELP_APP_ID").toString();
 			appSecret = meta.get("MOBIHELP_APP_SECRET").toString();
+			autoReply = meta.get("MOBIHELP_AUTO_REPLY_ENABLE").toString();
+			ratePromptCount = Integer.parseInt(meta.get("MOBIHELP_RATE_PROMPT_COUNT").toString());
 			MobihelpConfig config = new MobihelpConfig(domain, appId, appSecret);
+			if ("true".equals(autoReply)) {
+				config.setAutoReplyEnabled(true);
+			} else {
+				config.setAutoReplyEnabled(false);
+			}
+			if (ratePromptCount > 0) {
+				config.setLaunchCountForReviewPrompt(ratePromptCount);
+			}
 			Mobihelp.init(activity, config);
 		}
 		catch (Exception e) {

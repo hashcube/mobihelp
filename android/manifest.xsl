@@ -4,6 +4,8 @@
 	<xsl:param name="mobihelpDomain" />
 	<xsl:param name="mobihelpAppKey" />
 	<xsl:param name="mobihelpAppSecret" />
+	<xsl:param name="mobihelpAutoReplyEnabled" />
+	<xsl:param name="mobiHelpReviewPromptCount" />
 
 	<xsl:output indent="yes" />
 	<xsl:template match="comment()" />
@@ -19,6 +21,14 @@
 	<xsl:template match="meta-data[@android:name='MOBIHELP_APP_SECRET']">
 		<meta-data android:name="MOBIHELP_APP_SECRET" android:value="{$mobihelpAppSecret}"/>
 	</xsl:template>
+
+        <xsl:template match="meta-data[@android:name='MOBIHELP_AUTO_REPLY_ENABLE']">
+                <meta-data android:name="MOBIHELP_AUTO_REPLY_ENABLE" android:value="{$mobihelpAutoReplyEnabled}"/>
+        </xsl:template>
+
+        <xsl:template match="meta-data[@android:name='MOBIHELP_RATE_PROMPT_COUNT']">
+                <meta-data android:name="MOBIHELP_RATE_PROMPT_COUNT" android:value="{$mobiHelpReviewPromptCount}"/>
+        </xsl:template>
 
 	<xsl:output indent="yes" />
 	<xsl:template match="comment()" />
