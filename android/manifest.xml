@@ -5,14 +5,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <!--END_PLUGINS_MANIFEST-->
 <!--START_PLUGINS_APPLICATION-->
-	<!--Mobihelp-->
-	<meta-data android:name="MOBIHELP_DOMAIN" android:value="" />
-	<meta-data android:name="MOBIHELP_APP_ID" android:value="" />
-	<meta-data android:name="MOBIHELP_APP_SECRET" android:value="" />
-	<meta-data android:name="MOBIHELP_AUTO_REPLY_ENABLE" android:value="" />
-	<meta-data android:name="MOBIHELP_RATE_PROMPT_COUNT" android:value="" />
+    <!--Mobihelp-->
+    <meta-data android:name="MOBIHELP_DOMAIN" android:value="" />
+    <meta-data android:name="MOBIHELP_APP_ID" android:value="" />
+    <meta-data android:name="MOBIHELP_APP_SECRET" android:value="" />
+    <meta-data android:name="MOBIHELP_AUTO_REPLY_ENABLE" android:value="" />
+    <meta-data android:name="MOBIHELP_RATE_PROMPT_COUNT" android:value="" />
 	
-	<activity
+    <activity
         android:name="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
         android:configChanges="orientation|screenSize"
         android:theme="@style/Theme.Mobihelp"
