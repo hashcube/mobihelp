@@ -18,30 +18,30 @@
 }
 
 - (void) initializeWithManifest:(NSDictionary *)manifest appDelegate:(TeaLeafAppDelegate *)appDelegate {
-  @try {
-	NSString *appStoreId = @"id";
-	NSDictionary *ios = [manifest valueForKey:@"ios"];
-	NSString *domain = [ios valueForKey:@"mobihelpDomain"];
-	NSString *key = [ios valueForKey:@"mobihelpAppKey"];
-	NSString *secret = [ios valueForKey:@"mobihelpAppSecret"];
-	int ratePromptCount = [[ios valueForKey:@"mobiHelpReviewPromptCount"] intValue];
-	BOOL autoReply = [[ios valueForKey:@"mobihelpAutoReplyEnabled"] boolValue];
-    [appStoreId stringByAppendingString:[ios valueForKey:@"appleID"]];
+	@try {
+		NSString *appStoreId = @"id";
+		NSDictionary *ios = [manifest valueForKey:@"ios"];
+		NSString *domain = [ios valueForKey:@"mobihelpDomain"];
+		NSString *key = [ios valueForKey:@"mobihelpAppKey"];
+		NSString *secret = [ios valueForKey:@"mobihelpAppSecret"];
+		int ratePromptCount = [[ios valueForKey:@"mobiHelpReviewPromptCount"] intValue];
+		BOOL autoReply = [[ios valueForKey:@"mobihelpAutoReplyEnabled"] boolValue];
+		[appStoreId stringByAppendingString:[ios valueForKey:@"appleID"]];
 
-	self.viewController = appDelegate.tealeafViewController;
+		self.viewController = appDelegate.tealeafViewController;
 
-	MobihelpConfig *config = [[MobihelpConfig alloc]initWithDomain:domain
-		withAppKey:key
-		andAppSecret:secret];
-	config.appStoreId = appStoreId;
-	config.launchCountForAppReviewPrompt = ratePromptCount;
-	config.enableAutoReply = autoReply;
-	[[Mobihelp sharedInstance]initWithConfig:config];
-	[self getUnreadCount];
-  }
-    @catch (NSException *exception) {
-        NSLOG(@"{mobihelp} Failure to get: %@", exception);
-    }
+		MobihelpConfig *config = [[MobihelpConfig alloc]initWithDomain:domain
+			withAppKey:key
+			andAppSecret:secret];
+		config.appStoreId = appStoreId;
+		config.launchCountForAppReviewPrompt = ratePromptCount;
+		config.enableAutoReply = autoReply;
+		[[Mobihelp sharedInstance]initWithConfig:config];
+		[self getUnreadCount];
+	}
+	@catch (NSException *exception) {
+		NSLOG(@"{mobihelp} Failure to get: %@", exception);
+	}
 }
 
 - (void) applicationDidBecomeActive:(UIApplication *)app {
