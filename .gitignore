@@ -1,2 +1,8 @@
 *~
 *.DS_Store
+android/appcompat_v7/local.properties
+android/mobihelp/local.properties
+android/appcompat_v7/bin/
+android/appcompat_v7/gen/
+android/mobihelp/bin/
+android/mobihelp/gen/
