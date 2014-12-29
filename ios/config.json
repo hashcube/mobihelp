@@ -14,6 +14,7 @@
 		"Security",
 		"QuartzCore",
 		"sdk/MHModel.bundle",
-		"sdk/libFDMobihelpSDK.a"
+		"sdk/libFDMobihelpSDK.a",
+		"sdk/MHResources.bundle"
 	]
 }
