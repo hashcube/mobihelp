@@ -5,7 +5,7 @@ The iOS and Android mobihelp APIs are different. This plugin mimic's Freshdesk's
 Please refer [Mobihelp developer documentation](http://developer.freshdesk.com for usage)
 
 ### NOTE on iOS:
-To use the addon in iOS, manually copy the MobihelpResources to the resources directory.
+To use the addon in iOS, manually copy the MHLocalization folder to the resources directory.
 Select Copy Items if needed and Add to Target
 
 TODO: Add screenshot
