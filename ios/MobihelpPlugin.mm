@@ -1,5 +1,9 @@
 #import "MobihelpPlugin.h"
 
+@interface MobihelpPlugin()
+@property (nonatomic) BOOL initDone;
+@end
+
 @implementation MobihelpPlugin
 
 // The plugin must call super dealloc.
@@ -11,6 +15,7 @@
 - (id) init {
 	self = [super init];
 	if (!self) {
+		self.initDone = NO;
 		return nil;
 	}
 
@@ -37,6 +42,7 @@
 		config.launchCountForAppReviewPrompt = ratePromptCount;
 		config.enableAutoReply = autoReply;
 		[[Mobihelp sharedInstance]initWithConfig:config];
+		self.initDone = YES;
 		[self getUnreadCount];
 	}
 	@catch (NSException *exception) {
@@ -49,12 +55,14 @@
 }
 
 - (void) getUnreadCount {
-	[[Mobihelp sharedInstance] unreadCountWithCompletion:^(NSInteger count) {
-		[[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
-			@"mobihelpNotifCount", @"name",
-			[NSString stringWithFormat: @"%ld", (long)count], @"count",
-			nil]];
-	}];
+	if (self.initDone) {
+		[[Mobihelp sharedInstance] unreadCountWithCompletion:^(NSInteger count) {
+			[[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
+								@"mobihelpNotifCount", @"name",
+								[NSString stringWithFormat: @"%ld", (long)count], @"count",
+								nil]];
+		}];
+	}
 }
 
 - (void) setUserInfo: (NSDictionary *)jsonObject {
