@@ -4,6 +4,47 @@ Documentation   : http://developer.freshdesk.com/mobihelp
 Support         : http://support.freshdesk.com
 Email           : support@freshdesk.com
 
+v1.5.4
+---------------------
+Fixed ActionBar Up behaviour
+
+v1.5.3
+---------------------
+Fixed Timing issue on ClearData
+
+v1.5.2
+---------------------
+Fixed issue with Preset Email
+
+v1.5.1
+---------------------
+Fixed issue with article ordering
+
+v1.5
+---------------------
+Ability to display solutions filtered by tags
+Ability to preset subject and prefill description
+Ability to mark solutions as helpful or not
+Performance Improvements
+
+v1.4
+---------------------
+- Images can now be attached as part of Initial Feedback
+- On Resolved tickets, Users will be prompted to confirm if it was resolved. 
+- Option to hide Conversations ( use only Solutions/ FAQ in SDK ) 
+- Performance Improvements. 
+
+V1.3.1
+---------------------
+Added support for Toolbar based Material themes (*.NoActionBar themes)
+Added support for Enhanced Privacy Mode
+Ability to deep link and open solutions in-app
+Minor Fixes
+
+V1.3
+---------------------
+Added support for multiple categories in solutions
+
 V1.2.1 
 ---------------------
 Fix Empty Attachment Issue.
