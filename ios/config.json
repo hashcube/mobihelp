@@ -13,8 +13,11 @@
 		"Foundation",
 		"Security",
 		"QuartzCore",
-		"sdk/MHModel.bundle",
-		"sdk/libFDMobihelpSDK.a",
-		"sdk/MHResources.bundle"
+		"libFDMobihelpSDK.a",
+		"MHModel.bundle",
+		"MHResources.bundle"
+	],
+	"resources": [
+		"MHLocalization"
 	]
 }
