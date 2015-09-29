@@ -11,7 +11,7 @@
     <meta-data android:name="MOBIHELP_APP_SECRET" android:value="" />
     <meta-data android:name="MOBIHELP_AUTO_REPLY_ENABLE" android:value="" />
     <meta-data android:name="MOBIHELP_RATE_PROMPT_COUNT" android:value="" />
-	
+
     <activity
         android:name="com.freshdesk.mobihelp.activity.SolutionArticleListActivity"
         android:configChanges="orientation|screenSize"
@@ -23,6 +23,11 @@
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:theme="@style/Theme.Mobihelp"
         android:windowSoftInputMode="adjustResize|stateVisible" >
+    </activity>
+    <activity
+        android:name="com.freshdesk.mobihelp.activity.InterstitialActivity"
+        android:configChanges="orientation|screenSize"
+        android:theme="@style/Theme.AppCompat">
     </activity>
     <activity
         android:name="com.freshdesk.mobihelp.activity.TicketListActivity"

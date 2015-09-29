@@ -14,212 +14,211 @@ import android.content.pm.PackageManager;
 
 public class MobihelpPlugin implements IPlugin {
 
-	private Activity mActivity;
+  private Activity mActivity;
 
-	private final String TAG = "{mobihelp}";
-	
-	public class UnreadNotificationCountEvent extends com.tealeaf.event.Event {
-		String statusCode;
-		int count;
+  private final String TAG = "{mobihelp}";
 
-		public UnreadNotificationCountEvent(String status, int count) {
-			super("mobihelpNotifCount");
-			this.statusCode = status;
-			this.count = count;			
-		}		
-	}
+  public class UnreadNotificationCountEvent extends com.tealeaf.event.Event {
+    String statusCode;
+    int count;
 
-	private UnreadUpdatesCallback countUpdateCallback = new UnreadUpdatesCallback() {
-		String status;
-		
-		@Override
-		public void onResult(MobihelpCallbackStatus statusCode, Integer count) {
-			if(statusCode == MobihelpCallbackStatus.STATUS_SUCCESS) {
-				status = "success";
-			}
-			else if(statusCode == MobihelpCallbackStatus.STATUS_NO_TICKETS_CREATED) {
-				status = "noTicket";
-			}
-			else if(statusCode == MobihelpCallbackStatus.STATUS_NO_NETWORK_CONNECTION) {
-				status = "noNetwork";
-			}
-			else if(statusCode == MobihelpCallbackStatus.STATUS_UNKNOWN) {
-				status = "unknown";
-			}
-			else{
-				status = "error";
-			}
-			logger.log(TAG, "asynchronous call");
-			EventQueue.pushEvent(new UnreadNotificationCountEvent(status, count));
-		}
-	};
-	
-	public void onCreateApplication(Context applicationContext) {
-	}
+    public UnreadNotificationCountEvent(String status, int count) {
+      super("mobihelpNotifCount");
+      this.statusCode = status;
+      this.count = count;
+    }
+  }
 
-	public void onCreate(Activity activity, Bundle savedInstanceState) {
-		this.mActivity = activity;
-		PackageManager manager = activity.getBaseContext().getPackageManager();
-		String domain, appId, appSecret, autoReply;
-		int ratePromptCount;
-		try {
-			Bundle meta = manager.getApplicationInfo(activity.getApplicationContext().getPackageName(),
-				PackageManager.GET_META_DATA).metaData;
-			domain = meta.get("MOBIHELP_DOMAIN").toString();
-			appId = meta.get("MOBIHELP_APP_ID").toString();
-			appSecret = meta.get("MOBIHELP_APP_SECRET").toString();
-			autoReply = meta.get("MOBIHELP_AUTO_REPLY_ENABLE").toString();
-			ratePromptCount = Integer.parseInt(meta.get("MOBIHELP_RATE_PROMPT_COUNT").toString());
-			MobihelpConfig config = new MobihelpConfig(domain, appId, appSecret);
-			if ("true".equals(autoReply)) {
-				config.setAutoReplyEnabled(true);
-			} else {
-				config.setAutoReplyEnabled(false);
-			}
-			if (ratePromptCount > 0) {
-				config.setLaunchCountForReviewPrompt(ratePromptCount);
-			}
-			Mobihelp.init(activity, config);
-		}
-		catch (Exception e) {
-			logger.log(TAG + "{exception}", "" + e.getMessage());
-		}
-	}
-	
-	public void onResume() {
-		this.checkUnreadNotifications("{async: true}");
-	}
-	
-	public void onStart() {		
-	}
-	
-	public void onPause() {
-	}
+  private UnreadUpdatesCallback countUpdateCallback = new UnreadUpdatesCallback() {
+    String status;
 
-	public void onStop() {
-	}
+    @Override
+    public void onResult(MobihelpCallbackStatus statusCode, Integer count) {
+      if(statusCode == MobihelpCallbackStatus.STATUS_SUCCESS) {
+        status = "success";
+      }
+      else if(statusCode == MobihelpCallbackStatus.STATUS_NO_TICKETS_CREATED) {
+        status = "noTicket";
+      }
+      else if(statusCode == MobihelpCallbackStatus.STATUS_NO_NETWORK_CONNECTION) {
+        status = "noNetwork";
+      }
+      else if(statusCode == MobihelpCallbackStatus.STATUS_UNKNOWN) {
+        status = "unknown";
+      }
+      else{
+        status = "error";
+      }
+      logger.log(TAG, "asynchronous call");
+      EventQueue.pushEvent(new UnreadNotificationCountEvent(status, count));
+    }
+  };
 
-	public void onDestroy() {
-	}
+  public void onCreateApplication(Context applicationContext) {
+  }
 
-	public void onNewIntent(Intent intent) {
-	}
+  public void onCreate(Activity activity, Bundle savedInstanceState) {
+    this.mActivity = activity;
+    PackageManager manager = activity.getBaseContext().getPackageManager();
+    String domain, appId, appSecret, autoReply;
+    int ratePromptCount;
+    try {
+      Bundle meta = manager.getApplicationInfo(activity.getApplicationContext().getPackageName(),
+        PackageManager.GET_META_DATA).metaData;
+      domain = meta.get("MOBIHELP_DOMAIN").toString();
+      appId = meta.get("MOBIHELP_APP_ID").toString();
+      appSecret = meta.get("MOBIHELP_APP_SECRET").toString();
+      autoReply = meta.get("MOBIHELP_AUTO_REPLY_ENABLE").toString();
+      ratePromptCount = Integer.parseInt(meta.get("MOBIHELP_RATE_PROMPT_COUNT").toString());
+      MobihelpConfig config = new MobihelpConfig(domain, appId, appSecret);
+      if ("true".equals(autoReply)) {
+        config.setAutoReplyEnabled(true);
+      } else {
+        config.setAutoReplyEnabled(false);
+      }
+      if (ratePromptCount > 0) {
+        config.setLaunchCountForReviewPrompt(ratePromptCount);
+      }
+      Mobihelp.init(activity, config);
+    }
+    catch (Exception e) {
+      logger.log(TAG + "{exception}", "" + e.getMessage());
+    }
+  }
 
-	public void setInstallReferrer(String referrer) {
-	}
+  public void onResume() {
+    this.checkUnreadNotifications("{async: true}");
+  }
 
-	public void onActivityResult(Integer request, Integer result, Intent data) {
-	}
+  public void onStart() {
+  }
 
-	public boolean consumeOnBackPressed() {
-		return true;
-	}
+  public void onPause() {
+  }
 
-	public void onBackPressed() {
-	}
-	
-	public void setUserInfo(String userInfo) {
-		try {
-			JSONObject userObj = new JSONObject(userInfo);
-			this.setFullName((String) userObj.get("full_name"));
-			this.setEmail((String) userObj.get("email"));
-		}
-		catch (Exception e) {
-			logger.log(TAG + "{exception}", "" + e.getMessage());
-		}
-	}
-	
-	public void setUserEmail (String param) {
-		JSONObject reqJson;		
-		try{
-			reqJson = new JSONObject(param);
-			this.setEmail(reqJson.getString("email"));
-		}
-		catch (Exception e){
-			logger.log(TAG + "{exception}", "" + e.getMessage());
-		}		
-	}
+  public void onStop() {
+  }
 
-	public void setUserFullName (String param) {
-		JSONObject reqJson;		
-		try{
-			reqJson = new JSONObject(param);
-			this.setFullName(reqJson.getString("full_name"));
-		}
-		catch (Exception e){
-			logger.log(TAG + "{exception}", "" + e.getMessage());
-		}		
-	}
+  public void onDestroy() {
+  }
 
-	public void clearUserData(String param) {
-		Mobihelp.clearUserData(this.mActivity);
-	}
-	
-	public void leaveBreadCrumb (String param) {
-		JSONObject reqJson;		
-		try{
-			reqJson = new JSONObject(param);
-			Mobihelp.leaveBreadCrumb(reqJson.getString("breadcrumb"));
-		}
-		catch (Exception e){
-			logger.log(TAG + "{exception}", "" + e.getMessage());
-		}		
-	}
+  public void onNewIntent(Intent intent) {
+  }
 
-	public void addCustomData (String param) {
-		JSONObject reqJson;		
-		try{
-			reqJson = new JSONObject(param);
-			Mobihelp.addCustomData(reqJson.getString("field_name"), reqJson.getString("value"));
-		}
-		catch (Exception e){
-			logger.log(TAG + "{exception}", "" + e.getMessage());
-		}		
-	}
-	
-	public void showAppRateDialog(String params) {
-		Mobihelp.showAppRateDialog(this.mActivity);
-	}
-	
-	public void showConversations(String params) {
-		Mobihelp.showConversations(this.mActivity);
-	}
-	
-	public void showFeedback(String params) {
-		Mobihelp.showFeedback(this.mActivity);
-	}
-	
-	public void showSupport(String params) {
-		Mobihelp.showSupport(this.mActivity);
-	}
-	
-	public void checkUnreadNotifications(String params) {
-		JSONObject reqJson;
-		boolean async;
-		int count;
-		try{
-			reqJson = new JSONObject(params);
-			async = reqJson.getBoolean("async");
-			if(async) {
-				Mobihelp.getUnreadCountAsync(this.mActivity, countUpdateCallback);
-			}
-			else {
-				count = Mobihelp.getUnreadCount(this.mActivity);
-				EventQueue.pushEvent(new UnreadNotificationCountEvent("success", count));
-			}
-		}
-		catch (Exception e){
-			logger.log(TAG + "{exception}", "" + e.getMessage());
-		}		
-		
-	}
-	
-	private void setEmail(String email) {
-		Mobihelp.setUserEmail(this.mActivity, email);
-	}
-	
-	private void setFullName(String fullName) {
-		Mobihelp.setUserFullName(this.mActivity, fullName);
-	}
+  public void setInstallReferrer(String referrer) {
+  }
 
+  public void onActivityResult(Integer request, Integer result, Intent data) {
+  }
+
+  public boolean consumeOnBackPressed() {
+    return true;
+  }
+
+  public void onBackPressed() {
+  }
+
+  public void setUserInfo(String userInfo) {
+    try {
+      JSONObject userObj = new JSONObject(userInfo);
+      this.setFullName((String) userObj.get("full_name"));
+      this.setEmail((String) userObj.get("email"));
+    }
+    catch (Exception e) {
+      logger.log(TAG + "{exception}", "" + e.getMessage());
+    }
+  }
+
+  public void setUserEmail (String param) {
+    JSONObject reqJson;
+    try{
+      reqJson = new JSONObject(param);
+      this.setEmail(reqJson.getString("email"));
+    }
+    catch (Exception e){
+      logger.log(TAG + "{exception}", "" + e.getMessage());
+    }
+  }
+
+  public void setUserFullName (String param) {
+    JSONObject reqJson;
+    try{
+      reqJson = new JSONObject(param);
+      this.setFullName(reqJson.getString("full_name"));
+    }
+    catch (Exception e){
+      logger.log(TAG + "{exception}", "" + e.getMessage());
+    }
+  }
+
+  public void clearUserData(String param) {
+    Mobihelp.clearUserData(this.mActivity);
+  }
+
+  public void leaveBreadCrumb (String param) {
+    JSONObject reqJson;
+    try{
+      reqJson = new JSONObject(param);
+      Mobihelp.leaveBreadCrumb(reqJson.getString("breadcrumb"));
+    }
+    catch (Exception e){
+      logger.log(TAG + "{exception}", "" + e.getMessage());
+    }
+  }
+
+  public void addCustomData (String param) {
+    JSONObject reqJson;
+    try{
+      reqJson = new JSONObject(param);
+      Mobihelp.addCustomData(reqJson.getString("field_name"), reqJson.getString("value"));
+    }
+    catch (Exception e){
+      logger.log(TAG + "{exception}", "" + e.getMessage());
+    }
+  }
+
+  public void showAppRateDialog(String params) {
+    Mobihelp.showAppRateDialog(this.mActivity);
+  }
+
+  public void showConversations(String params) {
+    Mobihelp.showConversations(this.mActivity);
+  }
+
+  public void showFeedback(String params) {
+    Mobihelp.showFeedback(this.mActivity);
+  }
+
+  public void showSupport(String params) {
+    Mobihelp.showSupport(this.mActivity);
+  }
+
+  public void checkUnreadNotifications(String params) {
+    JSONObject reqJson;
+    boolean async;
+    int count;
+    try{
+      reqJson = new JSONObject(params);
+      async = reqJson.getBoolean("async");
+      if(async) {
+        Mobihelp.getUnreadCountAsync(this.mActivity, countUpdateCallback);
+      }
+      else {
+        count = Mobihelp.getUnreadCount(this.mActivity);
+        EventQueue.pushEvent(new UnreadNotificationCountEvent("success", count));
+      }
+    }
+    catch (Exception e){
+      logger.log(TAG + "{exception}", "" + e.getMessage());
+    }
+
+  }
+
+  private void setEmail(String email) {
+    Mobihelp.setUserEmail(this.mActivity, email);
+  }
+
+  private void setFullName(String fullName) {
+    Mobihelp.setUserFullName(this.mActivity, fullName);
+  }
 }
