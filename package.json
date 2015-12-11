@@ -1,6 +1,6 @@
 {
   "name": "mobihelp",
-  "version": "0.0.1",
+  "version": "1.6.4",
   "devkit": {
     "clientPaths": {
       "mobihelp": "js"
