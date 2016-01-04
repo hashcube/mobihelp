@@ -17,6 +17,7 @@ public class MobihelpPlugin implements IPlugin {
   private Activity mActivity;
 
   private final String TAG = "{mobihelp}";
+  private int unread_count;
 
   public class UnreadNotificationCountEvent extends com.tealeaf.event.Event {
     String statusCode;
@@ -28,31 +29,6 @@ public class MobihelpPlugin implements IPlugin {
       this.count = count;
     }
   }
-
-  private UnreadUpdatesCallback countUpdateCallback = new UnreadUpdatesCallback() {
-    String status;
-
-    @Override
-    public void onResult(MobihelpCallbackStatus statusCode, Integer count) {
-      if(statusCode == MobihelpCallbackStatus.STATUS_SUCCESS) {
-        status = "success";
-      }
-      else if(statusCode == MobihelpCallbackStatus.STATUS_NO_TICKETS_CREATED) {
-        status = "noTicket";
-      }
-      else if(statusCode == MobihelpCallbackStatus.STATUS_NO_NETWORK_CONNECTION) {
-        status = "noNetwork";
-      }
-      else if(statusCode == MobihelpCallbackStatus.STATUS_UNKNOWN) {
-        status = "unknown";
-      }
-      else{
-        status = "error";
-      }
-      logger.log(TAG, "asynchronous call");
-      EventQueue.pushEvent(new UnreadNotificationCountEvent(status, count));
-    }
-  };
 
   public void onCreateApplication(Context applicationContext) {
   }
@@ -87,10 +63,11 @@ public class MobihelpPlugin implements IPlugin {
   }
 
   public void onResume() {
-    this.checkUnreadNotifications("{async: true}");
+    this.checkUnreadNotifications();
   }
 
   public void onStart() {
+    this.checkUnreadNotifications();
   }
 
   public void onPause() {
@@ -193,25 +170,17 @@ public class MobihelpPlugin implements IPlugin {
     Mobihelp.showSupport(this.mActivity);
   }
 
-  public void checkUnreadNotifications(String params) {
-    JSONObject reqJson;
-    boolean async;
-    int count;
-    try{
-      reqJson = new JSONObject(params);
-      async = reqJson.getBoolean("async");
-      if(async) {
-        Mobihelp.getUnreadCountAsync(this.mActivity, countUpdateCallback);
-      }
-      else {
-        count = Mobihelp.getUnreadCount(this.mActivity);
-        EventQueue.pushEvent(new UnreadNotificationCountEvent("success", count));
-      }
+  public void checkUnreadNotifications() {
+    try {
+      unread_count = Mobihelp.getUnreadCount(this.mActivity);
     }
-    catch (Exception e){
+    catch (Exception e) {
       logger.log(TAG + "{exception}", "" + e.getMessage());
     }
+  }
 
+  public void getUnreadNotificationCount(String params) {
+    EventQueue.pushEvent(new UnreadNotificationCountEvent("success", unread_count));
   }
 
   private void setEmail(String email) {
