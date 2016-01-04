@@ -63,11 +63,9 @@ public class MobihelpPlugin implements IPlugin {
   }
 
   public void onResume() {
-    this.checkUnreadNotifications();
   }
 
   public void onStart() {
-    this.checkUnreadNotifications();
   }
 
   public void onPause() {
@@ -170,16 +168,14 @@ public class MobihelpPlugin implements IPlugin {
     Mobihelp.showSupport(this.mActivity);
   }
 
-  public void checkUnreadNotifications() {
+  public void getUnreadNotificationCount(String params) {
     try {
       unread_count = Mobihelp.getUnreadCount(this.mActivity);
     }
     catch (Exception e) {
       logger.log(TAG + "{exception}", "" + e.getMessage());
     }
-  }
 
-  public void getUnreadNotificationCount(String params) {
     EventQueue.pushEvent(new UnreadNotificationCountEvent("success", unread_count));
   }
 

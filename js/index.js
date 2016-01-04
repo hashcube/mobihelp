@@ -27,14 +27,16 @@ function invokeCallbacks(list) {
 }
 
 exports = new (Class(function () {
+  "use strict";
+
   var unread_cb = [];
 
-  this.init = function(opts) {
+  this.init = function() {
     pluginOn("mobihelpNotifCount", function(evt) {
       invokeCallbacks(unread_cb, evt);
     });
   };
-  
+
   this.setUserInfo = function (email, full_name) {
     pluginSend("setUserInfo", {full_name: full_name, email: email});
   };
@@ -73,10 +75,6 @@ exports = new (Class(function () {
 
   this.showSupport = function () {
     pluginSend("showSupport", {});
-  };
-
-  this.checkUnreadNotifications = function () {
-    pluginSend("checkUnreadNotifications");
   };
 
   this.getUnreadNotificationCount = function (cb) {
