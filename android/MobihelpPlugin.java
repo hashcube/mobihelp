@@ -17,7 +17,6 @@ public class MobihelpPlugin implements IPlugin {
   private Activity mActivity;
 
   private final String TAG = "{mobihelp}";
-  private int unread_count;
 
   public class UnreadNotificationCountEvent extends com.tealeaf.event.Event {
     String statusCode;
@@ -169,6 +168,8 @@ public class MobihelpPlugin implements IPlugin {
   }
 
   public void getUnreadNotificationCount(String params) {
+    int unread_count = 0;
+
     try {
       unread_count = Mobihelp.getUnreadCount(this.mActivity);
     }
