@@ -2,6 +2,7 @@
 
 @interface MobihelpPlugin()
 @property (nonatomic) BOOL initDone;
+@property NSInteger unread_count;
 @end
 
 @implementation MobihelpPlugin
@@ -43,26 +44,23 @@
 		config.enableAutoReply = autoReply;
 		[[Mobihelp sharedInstance]initWithConfig:config];
 		self.initDone = YES;
-		[self getUnreadCount];
 	}
 	@catch (NSException *exception) {
 		NSLOG(@"{mobihelp} Failure to get: %@", exception);
 	}
 }
 
-- (void) applicationDidBecomeActive:(UIApplication *)app {
-	[self getUnreadCount];
-}
-
-- (void) getUnreadCount {
-	if (self.initDone) {
-		[[Mobihelp sharedInstance] unreadCountWithCompletion:^(NSInteger count) {
-			[[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
-								@"mobihelpNotifCount", @"name",
-								[NSString stringWithFormat: @"%ld", (long)count], @"count",
-								nil]];
-		}];
-	}
+- (void) getUnreadNotificationCount {
+    @try {
+        self.unread_count = [[Mobihelp sharedInstance] unreadCount];
+        [[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
+                                @"mobihelpNotifCount", @"name",
+                                self.unread_count, @"count",
+                                nil]];
+    }
+    @catch (NSException *exception) {
+        NSLOG(@"{mobihelp} Failure to get: %@", exception);
+    }
 }
 
 - (void) setUserInfo: (NSDictionary *)jsonObject {
