@@ -1,23 +1,23 @@
 {
-	"code": [
-		"MobihelpPlugin.h",
-		"MobihelpPlugin.mm"
-	],
-	"frameworks": [
-		"MobileCoreServices",
-		"CoreTelephony",
-		"SystemConfiguration",
-		"CoreData",
-		"CoreGraphics",
-		"UIKit",
-		"Foundation",
-		"Security",
-		"QuartzCore",
-		"libFDMobihelpSDK.a",
-		"MHModel.bundle",
-		"MHResources.bundle"
-	],
-	"resources": [
-		"MHLocalization"
-	]
+  "code": [
+    "MobihelpPlugin.h",
+    "MobihelpPlugin.mm"
+  ],
+  "frameworks": [
+    "MobileCoreServices",
+    "CoreTelephony",
+    "SystemConfiguration",
+    "CoreData",
+    "CoreGraphics",
+    "UIKit",
+    "Foundation",
+    "Security",
+    "QuartzCore",
+    "libFDMobihelpSDK.a"
+  ],
+  "resources": [
+    "MHLocalization/en.lproj",
+    "MHModel.bundle",
+    "MHResources.bundle"
+  ]
 }
