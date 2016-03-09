@@ -50,14 +50,14 @@
 	}
 }
 
-- (void) getUnreadNotificationCount {
+- (void) getUnreadNotificationCount: (NSDictionary *)jsonObject {
     NSInteger unread_count = 0;
 
     @try {
         unread_count = [[Mobihelp sharedInstance] unreadCount];
         [[PluginManager get] dispatchJSEvent:[NSDictionary dictionaryWithObjectsAndKeys:
                                 @"mobihelpNotifCount", @"name",
-                                unread_count, @"count",
+                                [NSString stringWithFormat: @"%ld", unread_count], @"count",
                                 nil]];
     }
     @catch (NSException *exception) {
