@@ -1,18 +1,41 @@
-Usage
+# MobiHelp plugin for GameClosure Devkit
 
-### API
-The iOS and Android mobihelp APIs are different. This plugin mimic's Freshdesk's Android API. 
-Please refer [Mobihelp developer documentation](http://developer.freshdesk.com for usage)
+### Configuration
 
-### NOTE on iOS:
-To use the addon in iOS, manually copy the MHLocalization folder to the resources directory.
-Select Copy Items if needed and Add to Target
+Add this module to dependencies section of the manifest file.
 
-TODO: Add screenshot
-
-### Android Setup:
+```json
+"dependencies": {
+    "mobihelp": "https://github.com/hashcube/mobihelp.git#master"
+}
 ```
-$ cd android
-$ android update  project -p mobihelp
-$ android update  project -p  appcompat_v7
+
+Add mobihelp app key and other configurations.
+
+```json
+{
+    "android": {
+        "mobihelpAppKey": "xxx",
+        "mobihelpAppSecret": "xxx",
+        "mobihelpAutoReplyEnabled": "false",
+        "mobihelpDomain": "http://foo.freshdesk.com"
+    }
+}
 ```
+
+
+## Usage
+
+`import mobihelp` on top of the file where you want to use the module.
+
+- To open support window
+
+`mobihelp.showSupport()`
+
+- To send custom data, add 
+
+`mobihelp.addCustomData('key', 'value');`
+
+- To add bread crumbs,
+
+`mobihelp.leaveBreadCrumb('level_90_completed')`
